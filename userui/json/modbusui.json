@@ -1,0 +1,77 @@
+{
+	"comB_plot" : {
+			"Speed"  		: "0", 
+			"Id"   			: "1",
+			"Iq"   			: "2",
+			"Variable1"   		: "3",
+			"Variable2"   		: "4",
+			"Variable3"   		: "5",
+			""				:""
+	},
+	"comB_fanControlMode" : {
+			"mode0"  		: "0", 
+			"mode1"   		: "1",
+			""				:""
+	},
+	"comB_fanreGulation" : {
+			"regulation0"  		: "0", 
+			"regulation0"   	: "1",
+			"regulation0"  		: "2", 
+			"regulation0"   	: "3",
+			""				:""
+	},
+	"comB_fanPressure" : {
+			"pressure0"  		: "0", 
+			"pressure1"   		: "1",
+			"pressure2"  		: "2", 
+			"pressure3"   		: "3",
+			""				:""
+	},
+	"comB_fanType" : {
+			"type0"  		: "0", 
+			"type1"   		: "1",
+			"type2"  		: "2", 
+			"type3"   		: "3",
+			""				:""
+	},
+	"comB_custom3" : {
+			"reserved0"  		: "0", 
+			"reserved1"   		: "1",
+			""				:""
+	},
+	"comboBox_state" : {
+			"stop"  		: "0", 
+			"run"   		: "512",
+			"stall" 		: "259",		
+			"over_speed" 	: "258",
+			"over_Cur"  	: "257", 
+			"low_volt"   	: "260",
+			"high_volt" 	: "261",
+			""				:""
+	},
+	"BaudRate" : {
+			"9600"   : "9600", 
+			"19200"  : "19200", 
+			"38400"  : "38400", 
+			"115200" : "115200",
+			"Custom" : ""
+	},
+	"DataBits" : {
+			"5" : "5", 
+			"6" : "6", 
+			"7" : "7", 
+			"8" : "8"
+	},
+	"Parity" : {
+			"None"  : "0", 
+			"Even"  : "2", 
+			"Odd"   : "3",
+			"Space" : "4",		
+			"Mark"  : "5"	
+	},
+	"StopBits" : {
+			"1"  : "1", 
+			"1.5"  : "3", 
+			"2"   : "2"	
+	}
+}
