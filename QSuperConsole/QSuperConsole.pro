@@ -6,81 +6,23 @@ QT += widgets printsupport serialport serialbus network axcontainer
 
 CONFIG += c++11
 
+
+#########  QFRAMER  #########
+include(../qframer/qframer.pri)
+INCLUDEPATH += $$QFRAMER_INCLUDEPATH
+LIBS += -L$${QFRAMER_LIBPATH} $${QFRAMER_LIBS}
+
+#########  USERUI  #########
+include(../userui/userui.pri)
+INCLUDEPATH += $$USERUI_INCLUDEPATH
+LIBS += -L$${USERUI_LIBPATH} $${USERUI_LIBS}
+
 # application name
 TARGET = SuperConsole
 
 # type
 TEMPLATE = app
 DEPENDPATH += .
-
-
-#########  qframer  #########
-QFRAMER_VERSION = 1.1.0
-
-isEmpty(QFRAMER_LIBRARY_TYPE) {
-    QFRAMER_LIBRARY_TYPE = staticlib
-}
-
-QFRAMER_INCLUDEPATH = ../qframer
-QFRAMER_LIBPATH = $${QFRAMER_INCLUDEPATH}/lib
-QFRAMER_LIBS = -lqframer
-
-contains(QFRAMER_LIBRARY_TYPE, staticlib) {
-    DEFINES += QFRAMER_STATIC
-} else {
-    DEFINES += QFRAMER_SHARED
-}
-
-CONFIG(debug, debug|release) {
-    QFRAMER_LIBPATH = $${QFRAMER_LIBPATH}/debug
-}else{
-    QFRAMER_LIBPATH = $${QFRAMER_LIBPATH}/release
-}
-
-LIBS += -L$${QFRAMER_LIBPATH} $${QFRAMER_LIBS}
-
-INCLUDEPATH += $${QFRAMER_INCLUDEPATH}
-
-unix:!macx:QMAKE_RPATHDIR += $${QFRAMER_LIBPATH}
-macx {
-    QMAKE_RPATHDIR += $${QFRAMER_LIBPATH}
-    QMAKE_LFLAGS += -Wl,-rpath,$${QFRAMER_LIBPATH}
-}
-
-
-#########  USERUI  #########
-USERUI_VERSION = 1.1.0
-
-isEmpty(USERUI_LIBRARY_TYPE) {
-    USERUI_LIBRARY_TYPE = staticlib
-}
-
-USERUI_INCLUDEPATH = ../userui
-USERUI_LIBPATH = $${USERUI_INCLUDEPATH}/lib
-USERUI_LIBS = -luserui
-
-contains(USERUI_LIBRARY_TYPE, staticlib) {
-    DEFINES += USERUI_STATIC
-} else {
-    DEFINES += USERUI_SHARED
-}
-
-CONFIG(debug, debug|release) {
-    USERUI_LIBPATH = $${USERUI_LIBPATH}/debug
-}else{
-    USERUI_LIBPATH = $${USERUI_LIBPATH}/release
-}
-
-LIBS += -L$${USERUI_LIBPATH} $${USERUI_LIBS}
-
-INCLUDEPATH += $${USERUI_INCLUDEPATH}
-
-unix:!macx:QMAKE_RPATHDIR += $${USERUI_LIBPATH}
-macx {
-    QMAKE_RPATHDIR += $${USERUI_LIBPATH}
-    QMAKE_LFLAGS += -Wl,-rpath,$${USERUI_LIBPATH}
-}
-
 
 # build dir
 BuildDir =build_$$QT_VERSION

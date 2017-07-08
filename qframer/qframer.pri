@@ -1,0 +1,32 @@
+QFRAMER_VERSION = 1.1.0
+
+isEmpty(QFRAMER_LIBRARY_TYPE) {
+    QFRAMER_LIBRARY_TYPE = staticlib
+}
+
+QFRAMER_INCLUDEPATH = $$PWD
+QFRAMER_DIR = $$PWD
+QFRAMER_LIBS = -lqframer
+contains(QFRAMER_LIBRARY_TYPE, staticlib) {
+    DEFINES += QFRAMER_STATIC
+} else {
+    DEFINES += QFRAMER_SHARED
+    win32:QFRAMER_LIBS = -lqframer1
+}
+
+QFRAMER_LIBPATH = $$PWD/lib
+CONFIG(debug, debug|release) {
+    QFRAMER_LIBPATH = $$PWD/lib/debug
+} else {
+    QFRAMER_LIBPATH = $$PWD/lib/release
+}
+
+#message("QFRAMER_INCLUDEPATH: "$$QFRAMER_INCLUDEPATH)
+#message("QFRAMER_LIBPATH: "$$QFRAMER_LIBPATH)
+
+
+
+
+
+
+

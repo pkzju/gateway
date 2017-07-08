@@ -3,7 +3,6 @@ SUBDIRS += canopen \
            excelbase \
            qframer\
            qcustomplot \
-           treefrog \
            userui \
            QSuperConsole
 

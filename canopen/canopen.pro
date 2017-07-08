@@ -1,81 +1,35 @@
-CANOPEN_VERSION = 1.1.0
-
-isEmpty(CANOPEN_LIBRARY_TYPE) {
-    CANOPEN_LIBRARY_TYPE = staticlib
-}
-
-CANOPEN_INCLUDEPATH = .
-CANOPEN_LIBS = -lcanopen
-contains(CANOPEN_LIBRARY_TYPE, staticlib) {
-    DEFINES += CANOPEN_STATIC
-} else {
-    DEFINES += CANOPEN_SHARED
-    win32:CANOPEN_LIBS = -lcanopen1
-}
-
-CANOPEN_LIBPATH = $${CANOPEN_INCLUDEPATH}/lib
-CANOPEN_NEEDLIBS = -lControlCAN
-LIBS += -L$${CANOPEN_LIBPATH} $${CANOPEN_NEEDLIBS}
-
-isEmpty(PREFIX) {
-    unix {
-        PREFIX = /usr
-    } else {
-        PREFIX = $$[QT_INSTALL_PREFIX]
-    }
-}
-isEmpty(LIBDIR) {
-    LIBDIR = lib
-}
+include(canopen.pri)
 
 
-INCLUDEPATH += .
 TEMPLATE = lib
 TARGET = canopen
 
 DEFINES += CANOPEN_BUILD
-CONFIG += $${CANOPEN_LIBRARY_TYPE}
+CONFIG += $${CANOPEN_LIBRARY_TYPE} create_prl
 VERSION = $${CANOPEN_VERSION}
+
+#depend libs
+CANOPEN_DEPENDPATH = $${CANOPEN_DIRPATH}/depend_libs
+CANOPEN_NEEDLIBS = -lControlCAN
+LIBS += -L$${CANOPEN_DEPENDPATH} $${CANOPEN_NEEDLIBS}
+
+INCLUDEPATH += $${CANOPEN_INCLUDEPATH}
 
 # build dir
 BuildDir =build_$$QT_VERSION
 
+DESTDIR = $${CANOPEN_LIBPATH}
 CONFIG(debug, debug|release) {
-    DESTDIR = $$OUT_PWD/lib/debug
     OBJECTS_DIR = $$OUT_PWD/debug/$$BuildDir/.obj
     MOC_DIR = $$OUT_PWD/debug/$$BuildDir/.moc
     RCC_DIR = $$OUT_PWD/debug/$$BuildDir/.rcc
     UI_DIR = $$OUT_PWD/debug/$$BuildDir/.ui
 } else {
-    DESTDIR = $$OUT_PWD/lib/release
     OBJECTS_DIR = $$OUT_PWD/release/$$BuildDir/.obj
     MOC_DIR = $$OUT_PWD/release/$$BuildDir/.moc
     RCC_DIR = $$OUT_PWD/release/$$BuildDir/.rcc
     UI_DIR = $$OUT_PWD/release/$$BuildDir/.ui
 }
-
-#win32:DESTDIR = $$OUT_PWD
-macx:QMAKE_LFLAGS_SONAME = -Wl,-install_name,@rpath/
-
-# install
-headers.files = $${INSTALL_HEADERS}
-headers.path = $${PREFIX}/include/canopen
-private_headers.files = $${PRIVATE_HEADERS}
-private_headers.path = $${PREFIX}/include/canopen/private
-target.path = $${PREFIX}/$${LIBDIR}
-INSTALLS += headers  private_headers target
-
-# pkg-config support
-CONFIG += create_pc create_prl no_install_prl
-QMAKE_PKGCONFIG_DESTDIR = pkgconfig
-QMAKE_PKGCONFIG_LIBDIR = $$target.path
-QMAKE_PKGCONFIG_INCDIR = $$headers.path
-equals(CANOPEN_LIBRARY_TYPE, staticlib) {
-    QMAKE_PKGCONFIG_CFLAGS = -DCANOPEN_STATIC
-} else {
-    QMAKE_PKGCONFIG_CFLAGS = -DCANOPEN_SHARED
-}
-unix:QMAKE_CLEAN += -r pkgconfig lib$${TARGET}.prl
 
 HEADERS += \
     $$PWD/applicfg.h \
